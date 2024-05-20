@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>RESERVA TU TURNO </h1>
+    <div class="calendario">
+        <div class="controles">
+            <button id="mesAnterior">Anterior</button>
+            <span class="mesActual"></span>
+            <button id="mesSiguiente">Siguiente</button>
+        </div>
+        <ul>
+            <li>Dom</li>
+            <li>Lun</li>
+            <li>Mar</li>
+            <li>Mier</li>
+            <li>Jue</li>
+            <li>Vier</li>
+            <li>Sab</li>
+        </ul>
+        <div class="dias"></div>
+        
+        <div id="formulario-reserva">
+            <div id="horarios-click" class="horarios-disponibles"></div>
+            <form id="formularioReserva">
+                <h3>Dejanos tus datos</h3>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" title="Agrega tu nombre aqui" required>
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" title="Agrega tu telefono aqui"required>
+                <button type="submit">Reservar</button>
+                
+            </form>
+        </div>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    align-self: center;
+    width: 800px;
+    color: azure;
+    background-color: rgb(12, 0, 15);
+    text-align: center;
+}
+
+.calendario {
+    text-decoration: beige;
+    width: 800px;
+    height: 700px;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+    background-image: url(./assets/people-exercise-fit-fitness.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    .controles {
+        display: flex;
+        justify-content: space-between;
+        margin: 4px;
+        .mesActual {
+            color: azure;
+            font-size: 28px;
+        }
+        #mesAnterior {
+            justify-self: center;
+            width: 100px;
+            border-radius: 50% 10% 10% 50%;
+        }
+        
+        #mesSiguiente {
+            justify-self:center;
+            width: 100px;
+            border-radius: 10% 50% 50% 10%;
+        }
+    }
+    ul {
+        display: flex;
+        li {
+            width: 120px;
+            list-style: none;
+            text-align: center;
+            color: azure;}
+    }
+    .dias {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        .dia {
+            position: relative;
+            color: azure;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+        }
+    }
+    .mes {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+}
+
+.dia:hover {
+    scale: 1.1;
+    border: 2px solid rgb(12, 0, 15);
+    background-color: darkslategray;
+}
+#formulario-reserva {
+    display: flex;
+    flex-direction: column;
+    .horarios-disponibles {
+        display: flex;
+        gap: 15px;
+        height: 30px;
+        color: rgb(206, 245, 245);
+        margin: 15px;
+        .horario {
+            cursor: pointer;
+        }
+        
+    }
+    #formularioReserva {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        input {
+            width: 50%;
+            height: 25px;
+        }
+        button {
+            width: 30%;
+            height: 30px;
+            border-radius: 15px;
+        }
+        h3 {
+            color: azure;
+        }
+        label {
+            color: azure;
+        }
+    }
+}
+
+.horario:hover, .horario.clickeado {
+    scale: 1.1;
+    border: 2px solid rgb(12, 0, 15);
+    background-color: darkslategray;
+}
+
+button:hover {
+    color: azure;
+    background-color: rgb(12, 0, 15);
+}
+
+
