@@ -11,16 +11,17 @@ body {
 
 h1 {
     align-self: center;
-    width: 800px;
+    width: 900px;
     color: azure;
     background-color: rgb(12, 0, 15);
     text-align: center;
 }
 
 .calendario {
+    position: relative;
     text-decoration: beige;
-    width: 800px;
-    height: 700px;
+    width: 900px;
+    height: 800px;
     margin: auto;
     padding: 20px;
     position: relative;
@@ -75,35 +76,50 @@ h1 {
 }
 
 .dia:hover {
-    scale: 1.1;
-    border: 2px solid rgb(12, 0, 15);
+    scale: 1.05;
     background-color: darkslategray;
+    z-index: 2;
 }
 #formulario-reserva {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     .horarios-disponibles {
+        font-size: 20px;
         display: flex;
+        align-items: center;
+        flex-direction: column;
         gap: 15px;
         height: 30px;
-        color: rgb(206, 245, 245);
+        color: rgb(206, 245, 208);
         margin: 15px;
-        .horario {
-            cursor: pointer;
+        .horarios-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            gap: 20px;
+            .horario {
+                cursor: pointer;
+                width: 60px;
+            }
         }
         
     }
     #formularioReserva {
         display: none;
+        width: 300px;
+        margin-top: 30px;
         flex-direction: column;
+        align-self: center;
         align-items: center;
         gap: 10px;
         input {
-            width: 50%;
+            width: 100%;
             height: 25px;
         }
         button {
-            width: 30%;
+            width: 50%;
             height: 30px;
             border-radius: 15px;
         }
@@ -113,26 +129,42 @@ h1 {
         label {
             color: azure;
         }
+        .mensaje-error {
+            display: none;
+        }
     }
 }
 
 .horario.reservado {
-    background-color: lightgray;
     color: rgb(199, 56, 56);
-    
+    text-decoration: line-through;
 }
 
-.horario:hover, .horario.clickeado {
-    scale: 1.1;
-    border: 2px solid rgb(12, 0, 15);
-    background-color: darkslategray;
+.horario:hover {
+    scale: 1.2;
 }
 
 button:hover {
     color: azure;
     background-color: rgb(12, 0, 15);
 }
-
+.reserva-realizada {
+    font-size: 18px;
+    color: rgb(219, 206, 206);
+    margin-top: 20%;
+    justify-content: center;
+    width: 100%;
+    background-color: rgb(48, 50, 56);
+}
+.btn-cont {
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+    position: absolute;
+    left: 45%;
+    margin-top: 2%;
+    border-radius: 10px;
+}
 /* Estilos para la tabla de reservas */
 
 
@@ -201,10 +233,7 @@ button:hover {
         grid-template-columns: repeat(8, 1fr);
         width: 300px;
     }
-    .contenedorHorarios {
-        display: flex;
-        flex-direction: column;
-    }
+    
    .reservas-dia {
     margin: 10px;
    }
