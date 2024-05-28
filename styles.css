@@ -116,6 +116,12 @@ h1 {
     }
 }
 
+.horario.reservado {
+    background-color: lightgray;
+    color: rgb(199, 56, 56);
+    
+}
+
 .horario:hover, .horario.clickeado {
     scale: 1.1;
     border: 2px solid rgb(12, 0, 15);
@@ -127,4 +133,91 @@ button:hover {
     background-color: rgb(12, 0, 15);
 }
 
+/* Estilos para la tabla de reservas */
 
+
+.calendario-reservas {
+    text-decoration: rgb(15, 15, 15);
+    width: 800px;
+    height: 700px;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+    background-color: cadetblue;
+    h2 {
+        justify-self: center;
+        text-align: center;
+        font-size: 50px;
+        background-color:rgb(167, 130, 177); ;
+    }
+    .controles-reservas {
+        display: flex;
+        justify-content: space-between;
+        margin: 4px;
+        .mesActual-res {
+            color: rgb(17, 17, 17);
+            font-size: 28px;
+        }
+        #mesAnterior-res {
+            justify-self: center;
+            width: 100px;
+            height: 30px;
+            border-radius: 50% 10% 10% 50%;
+        }
+        
+        #mesSiguiente-res {
+            justify-self:center;
+            width: 100px;
+            border-radius: 10% 50% 50% 10%;
+        }
+    }
+    ul {
+        display: flex;
+        li {
+            width: 120px;
+            list-style: none;
+            text-align: center;
+            color: rgb(16, 17, 17);}
+    }
+    .dias-res {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        .dia {
+            position: relative;
+            color: rgb(15, 15, 15);
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+        }
+    }
+    .mes {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .reservas-form {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        width: 300px;
+    }
+    .contenedorHorarios {
+        display: flex;
+        flex-direction: column;
+    }
+   .reservas-dia {
+    margin: 10px;
+   }
+   .reserva-elem {
+    margin: 30px;
+   }
+    .reserv {
+        position: absolute;
+        bottom: 20%;
+        color: red;
+        text-decoration: maroon;
+        text-align: center;
+        z-index: 10;
+    }
+}
+  

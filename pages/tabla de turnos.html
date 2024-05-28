@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de turnos</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="calendario-reservas">
+        <h2>RESERVAS</h2>
+        <div class="controles-reservas">
+            <button id="mesAnterior-res">Anterior</button>
+            <span class="mesActual"></span>
+            <button id="mesSiguiente-res">Siguiente</button>
+        </div>
+        <ul>
+            <li>Dom</li>
+            <li>Lun</li>
+            <li>Mar</li>
+            <li>Mier</li>
+            <li>Jue</li>
+            <li>Vier</li>
+            <li>Sab</li>
+        </ul>
+        <div class="dias-res"></div>
+        
+        <div class="reservas-form">
+            <div id="horarios-click" class="horarios-disponibles"></div>
+            <!-- El siguiente div ahora tiene una clase diferente -->
+            <div class="calendario-reservas-segundo"></div>
+        </div>
+    </div>
+    <script src="script2.js"></script>
+</body>
+</html>

@@ -5,14 +5,19 @@
     document.addEventListener("DOMContentLoaded", function() {
     const calendario = document.querySelector(".calendario");
     const mesActualElemento = document.querySelector(".mesActual");
-    const contenedorHorarios = document.querySelector(".horarios-disponibles");
+    const contenedorHorarios = document.querySelector (".horarios-disponibles");
     const formularioReserva = document.getElementById("formularioReserva");
     let anoActual;
     let mesActual;
     let fechaSeleccionada;
     let horarioSeleccionado;
     const horariosReservadosPorFecha = {};  
-    const reservas = {}; 
+     
+        /* Obtener los datos guardados del almacenamiento local al cargar la página */
+    const datosGuardados = localStorage.getItem("datosReservas");
+    if (datosGuardados) {
+        Object.assign(horariosReservadosPorFecha, JSON.parse(datosGuardados));
+    }
 
      /* Obtener la fecha actual */
 
@@ -26,6 +31,7 @@
 
      /* Función para generar el calendario */
 
+    
     function generarCalendario(ano, mes) {
         const primerDiaDelMes = new Date(ano, mes, 1);
         const ultimoDiaDelMes = new Date(ano, mes + 1, 0);
@@ -83,69 +89,69 @@
         mostrarHorariosDisponibles(fechaSeleccionada);
         contenedorHorarios.style.display = "flex";
     });
+    
+     /* Mostrar las opciones de horarios */
+     function mostrarHorariosDisponibles(fecha) {
+        contenedorHorarios.innerHTML = "";   /* Limpia las opciones de horarios existentes */
+    
+        const horariosReservadosParaFecha = horariosReservadosPorFecha[fecha.toLocaleDateString('es-ES')] || [];
+    
+        /* Horarios disponibles para el día seleccionado */
+        const horariosDisponibles = ["09:00hs", "10:00hs", "11:00hs", "12:00hs", "13:00hs", "14:00hs", "15:00hs"];
+        const eligeHorario = document.createElement("div");
+        eligeHorario.textContent = "Elige un horario para:" + fecha.toLocaleDateString('es-ES');
+        eligeHorario.style.fontWeight = "bold";
+        contenedorHorarios.appendChild(eligeHorario);
+    
+        /* Mostrar las opciones de horarios disponibles */
+        horariosDisponibles.forEach(function(horario) {
+            const opcion = document.createElement("div");
+            opcion.classList.add("horario");
+            opcion.textContent = horario;
+            opcion.style.lineHeight = "25px";
+            
+            // Verificar si el horario está reservado
+            if (horariosReservadosParaFecha.some(reserva => reserva.horario === horario)) {
+                opcion.classList.add("reservado");
+            }
+    
+            contenedorHorarios.appendChild(opcion);
+        });
+    };
 
      /* Evento para seleccionar un horario */
 
-    contenedorHorarios.addEventListener("click", function(event) {
-        horarioSeleccionado = event.target.textContent;
-        var horariosReservados = horariosReservadosPorFecha[fechaSeleccionada.toDateString()];
-    if (horariosReservados && horariosReservados.includes(horarioSeleccionado)) {
-        alert("¡Este horario ya está reservado!");
-    } else {
-        mostrarFormularioReserva();
-    }
-
-    });
-
-     /* Mostrar las opciones de horarios */
-    function mostrarHorariosDisponibles(fecha) {
-        contenedorHorarios.innerHTML = "";   /* Limpia las opciones de horarios existentes */
-
-         /* Obtener los horarios reservados para la fecha seleccionada */
-
-        const horariosReservadosParaFecha = horariosReservadosPorFecha[fecha.toDateString()] || [];
-
-         /* Horarios disponibles para el día seleccionado */
-
-        const horariosDisponibles = ["09:00hs", "10:00hs", "11:00hs", "12:00hs", "13:00hs", "14:00hs", "15:00hs"];
-        const eligeHorario = document.createElement("div");
-        eligeHorario.textContent = "Elige un horario";
-        eligeHorario.style.fontWeight = "bold";
-        contenedorHorarios.appendChild(eligeHorario);
-
-
-         /* Mostrar las opciones de horarios disponibles */
-        
-        
-        horariosDisponibles.forEach(function(horario) {
-            if (!horariosReservadosParaFecha.includes(horario)) { 
-                const opcion = document.createElement("div");
-                opcion.classList.add("horario");
-                opcion.textContent = horario;
-                opcion.style.lineHeight = "25px";
-                contenedorHorarios.appendChild(opcion);
+     contenedorHorarios.addEventListener("click", function(event) {
+        if (event.target.classList.contains("horario")) {
+            horarioSeleccionado = event.target.textContent;
+            const fechaKey = fechaSeleccionada.toLocaleDateString('es-ES');
+            const horariosReservados = horariosReservadosPorFecha[fechaKey];
+            if (horariosReservados && horariosReservados.some(reserva => reserva.horario === horarioSeleccionado)) {
                 
-                opcion.addEventListener('click', function() {
-                    const horarios = document.querySelectorAll('.horario');
-                    horarios.forEach(function(item) {
-                        item.classList.remove('clickeado');
-                    });
-                    
-                    this.classList.add('clickeado');
-                });
+                const reserv = document.createElement("div");
+                reserv.classList.add("reserv");
+                reserv.textContent = "\nEl horario no esta disponible";
+                contenedorHorarios.appendChild(reserv);
+                
+            } else {
+                mostrarFormularioReserva();
+                contenedorHorarios.style.display= "none";
             }
-        });
-        
-        
-    }
-    document.getElementById("horarios-click").addEventListener('click', function() {
-        this.classList.toggle("clickeado");
+        }
     });
+    
+    
+    
+    
+
+    
+    
     
      /* Mostrar el formulario de reserva */
     function mostrarFormularioReserva() {
         formularioReserva.style.display = "flex";
     }
+    
      /* Maneja el envío del formulario */
     formularioReserva.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -153,27 +159,43 @@
         const telefono = document.getElementById("telefono").value;
 
          /* Guardar el horario reservado para la fecha seleccionada */
-        if (!horariosReservadosPorFecha[fechaSeleccionada.toDateString()]) {
-            horariosReservadosPorFecha[fechaSeleccionada.toDateString()] = [];
+        
+        
+         if (!horariosReservadosPorFecha[fechaSeleccionada.toLocaleDateString('es-ES')]) {
+            horariosReservadosPorFecha[fechaSeleccionada.toLocaleDateString('es-ES')] = [];
         }
-        horariosReservadosPorFecha[fechaSeleccionada.toDateString()].push(horarioSeleccionado);
-
-         /* Guarda la reserva */
-        const reserva = {
+        horariosReservadosPorFecha[fechaSeleccionada.toLocaleDateString('es-ES')].push({
             nombre: nombre,
-            telefono: telefono,
-            fecha: fechaSeleccionada.toDateString(),
-            horario: horarioSeleccionado
-        };
-        reservas[fechaSeleccionada.toDateString()] = reservas[fechaSeleccionada.toDateString()] || [];
-        reservas[fechaSeleccionada.toDateString()].push(reserva);
+            horario: horarioSeleccionado,
+            telefono: telefono
+        });
 
-        alert("¡Reserva realizada con éxito! Nombre: " + nombre + ", Teléfono: " + telefono + ", Fecha: " + fechaSeleccionada.toDateString() + ", Horario: " + horarioSeleccionado);
+        
+        
 
-         /* Limpiar el formulario y ocultarlo después de enviar */
-        formularioReserva.reset();
-        formularioReserva.style.display = "none";
-        contenedorHorarios.style.display = "none";
+    var mensaje = "Fecha\t\tHorarios reservados\t\tNombre\n";
+    mensaje += "--------------------------------------------\n";
 
+    // Iterar sobre las claves y valores del objeto horariosReservadosPorFecha
+    Object.keys(horariosReservadosPorFecha).forEach(function(key) {
+        var horarios = horariosReservadosPorFecha[key];
+        mensaje += key + "\t\t";
+        mensaje += horarios.join(", ") + "\t\t" + nombre + "\n";
     });
+
+
+    // Guardar los datos actualizados en el almacenamiento local
+    localStorage.setItem("datosReservas", JSON.stringify(horariosReservadosPorFecha));
+
+    alert("¡Reserva realizada con éxito! Nombre: " + nombre + ", Teléfono: " + telefono + ", Fecha: " + fechaSeleccionada.toLocaleDateString('es-ES') + ", Horario: " + horarioSeleccionado);
+
+    /* Limpiar el formulario y ocultarlo después de enviar */
+    formularioReserva.reset();
+    formularioReserva.style.display = "none";
+    contenedorHorarios.style.display = "none";
+    // Construir el mensaje con filas
+
+        });
 });
+
+
